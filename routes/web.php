@@ -24,3 +24,17 @@ Route::get('/dashboard', function () {
 })->middleware(['auth'])->name('dashboard');
 
 require __DIR__.'/auth.php';
+
+Route::group(['prefix'=>'admin','middleware'=>['admin','auth']],function(){
+    Route::get('dashboard',[AdminController::class,'index'])->name('admin.dashboard');
+    Route::get('profile',[AdminController::class,'index'])->name('admin.profile');
+    Route::get('settings',[AdminController::class,'index'])->name('admin.settings');
+
+});
+
+Route::group(['prefix'=>'user','middleware'=>['user','auth']],function(){
+    Route::get('dashboard',[UserController::class,'index'])->name('admin.dashboard');
+    Route::get('profile',[UserController::class,'index'])->name('admin.profile');
+    Route::get('settings',[UserController::class,'index'])->name('admin.settings');
+
+});
